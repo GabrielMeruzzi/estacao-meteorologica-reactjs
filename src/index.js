@@ -1,13 +1,12 @@
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import DashboardLayoutBasic from "./pages/dashboard/Dashboard.js";
+import NavigationLayout from "./pages/navigation/Navigation.js";
 import "bootstrap/dist/css/bootstrap.min.css";
-
 
 export default function App() {
   return (
     <BrowserRouter>
-      <DashboardLayoutBasic />
+      <NavigationLayout />
     </BrowserRouter>
   );
 }

@@ -3,12 +3,14 @@ import Carousel from "react-bootstrap/Carousel";
 import LineGraph from "../lineGraph/LineGraph";
 
 function CarouselGraphs({ lastMeasurements }) {
+
+  console.log(lastMeasurements)
   return (
     <Card className="cardInfo" sx={{ borderRadius: 5 }}>
       <Carousel style={{ width: "100%", height: "100%" }}>
         <Carousel.Item
           interval={10000}
-          // style={{ display: "flex", justifyContent: "center" }}
+          style={{ display: "flex", justifyContent: "center" }}
         >
           <LineGraph
           key={"temperature"}
@@ -24,7 +26,7 @@ function CarouselGraphs({ lastMeasurements }) {
           key={"humidity"}
             lastMeasurements={lastMeasurements}
             measurementLabel={"humidity"}
-            measurementTitle={"Variação de humidade"}
+            measurementTitle={"Variação de umidade"}
           />
         </Carousel.Item>
         <Carousel.Item

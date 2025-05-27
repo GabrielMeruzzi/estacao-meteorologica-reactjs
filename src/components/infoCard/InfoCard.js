@@ -23,7 +23,7 @@ export default function InfoCard({
         </Typography>
         <Typography style={{display:"flex", alignItems:"center"}} variant="h7" component="div">
           {measurementComp > 0 ? <NorthIcon className="comparisonIcon" style={{color:"green"}} /> : <SouthIcon className="comparisonIcon" style={{color:"red"}}/>}
-          {measurementComp == 0 ? 0 : measurementComp} {measurementLabel2}
+          {measurementComp === 0 ? 0 : measurementComp} {measurementLabel2}
         </Typography>
       </CardContent>
       {icon}

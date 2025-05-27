@@ -14,6 +14,7 @@ function getData(data, dataLabel) {
   }
 }
 
+
 function getTime(data) {
   try {
     return data.map((element) => {
@@ -33,7 +34,7 @@ export default function BasicLineChart({
   lastMeasurements,
   measurementLabel,
   measurementTitle,
-  graphVariation
+  // graphVariation
 }) {
   return (
     <Card className="cardInfo cardGraph" sx={{ borderRadius: 5 }}>
