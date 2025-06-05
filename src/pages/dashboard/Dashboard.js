@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useParams } from "react-router-dom";
+import "./Dashboard.css";
 import { db } from "../../firebase/firebaseConfig";
 import {
   collection,
@@ -36,32 +37,32 @@ export default function PageContent() {
   const lastMeasurements = measurements.slice(-5);
 
   React.useEffect(() => {
-  if (!stationId) return;
-  const daysRef = collection(db, "stations", stationId, "days");
+    if (!stationId) return;
+    const daysRef = collection(db, "stations", stationId, "days");
 
-  const unsubDays = onSnapshot(daysRef, (snap) => {
-    const lastDay = snap.docs
-      .map((d) => d.id)
-      .sort((a, b) => new Date(b) - new Date(a))[0];
+    const unsubDays = onSnapshot(daysRef, (snap) => {
+      const lastDay = snap.docs
+        .map((d) => d.id)
+        .sort((a, b) => new Date(b) - new Date(a))[0];
 
-    const q = query(
-      collection(db, "stations", stationId, "days", lastDay, "measurements"),
-      orderBy("timestamp", "desc")
-    );
+      const q = query(
+        collection(db, "stations", stationId, "days", lastDay, "measurements"),
+        orderBy("timestamp", "desc")
+      );
 
-    const unsubMeas = onSnapshot(q, (measSnap) => {
-      const data = measSnap.docs
-        .slice(0, 5)
-        .map((doc) => ({ ...doc.data(), id: doc.id, day: lastDay }))
-        .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+      const unsubMeas = onSnapshot(q, (measSnap) => {
+        const data = measSnap.docs
+          .slice(0, 5)
+          .map((doc) => ({ ...doc.data(), id: doc.id, day: lastDay }))
+          .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
 
-      setMeasurements(data);
-      setLoading(false);
+        setMeasurements(data);
+        setLoading(false);
+      });
+      return () => unsubMeas();
     });
-    return () => unsubMeas();
-  });
-  return () => unsubDays();
-}, [stationId]);
+    return () => unsubDays();
+  }, [stationId]);
 
   if (loading) {
     return (
@@ -101,37 +102,59 @@ export default function PageContent() {
           {new Date(lastMeasurements[4].timestamp).toLocaleString("pt-BR")}
         </Typography>
       </div>
-      <InfoCard
-        measurementLabel={"Temperatura Atual"}
-        measurementLabel2={"graus"}
-        measurementValue={`${lastMeasurements[4].temperature} °C`}
-        measurementComp={measurementComparison(lastMeasurements, "temperature")}
-        icon={<ThermostatIcon className="icon" />}
-      />
-      <InfoCard
-        measurementLabel={"Umidade"}
-        measurementLabel2={"%"}
-        measurementValue={`${lastMeasurements[4].humidity.toFixed(2)} %`}
-        measurementComp={measurementComparison(lastMeasurements, "humidity")}
-        icon={<WaterDropIcon className="icon" />}
-      />
-      <InfoCard
-        measurementLabel={"Nível UV"}
-        measurementValue={lastMeasurements[4].uv_index}
-        measurementComp={measurementComparison(lastMeasurements, "uv_index")}
-        icon={<Brightness7Icon className="icon" />}
-      />
-      <InfoCard
-        measurementLabel={"Luminosidade"}
-        measurementValue={lastMeasurements[4].light_intensity}
-        measurementComp={measurementComparison(
-          lastMeasurements,
-          "light_intensity"
-        )}
-        icon={<WbSunnyIcon className="icon" />}
-      />
-      <CarouselGraphs lastMeasurements={lastMeasurements} />
-      <BarGraph />
+      <Box className="box-cards">
+        <Box className="box-info-cards">
+          <InfoCard
+            className="info-card"
+            measurementLabel={"Temperatura Atual"}
+            measurementLabel2={"graus"}
+            measurementValue={`${lastMeasurements[4].temperature} °C`}
+            measurementComp={measurementComparison(
+              lastMeasurements,
+              "temperature"
+            )}
+            icon={<ThermostatIcon className="icon" />}
+          />
+          <InfoCard
+            className="info-card"
+            measurementLabel={"Umidade"}
+            measurementLabel2={"%"}
+            measurementValue={`${lastMeasurements[4].humidity.toFixed(2)} %`}
+            measurementComp={measurementComparison(
+              lastMeasurements,
+              "humidity"
+            )}
+            icon={<WaterDropIcon className="icon" />}
+          />
+          <InfoCard
+            className="info-card"
+            measurementLabel={"Nível UV"}
+            measurementValue={lastMeasurements[4].uv_index}
+            measurementComp={measurementComparison(
+              lastMeasurements,
+              "uv_index"
+            )}
+            icon={<Brightness7Icon className="icon" />}
+          />
+          <InfoCard
+            className="info-card"
+            measurementLabel={"Luminosidade"}
+            measurementValue={lastMeasurements[4].light_intensity}
+            measurementComp={measurementComparison(
+              lastMeasurements,
+              "light_intensity"
+            )}
+            icon={<WbSunnyIcon className="icon" />}
+          />
+        </Box>
+        <Box className="box-graph-cards">
+          <CarouselGraphs
+            className="info-card"
+            lastMeasurements={lastMeasurements}
+          />
+          <BarGraph className="info-card" />
+        </Box>
+      </Box>
     </Box>
   );
 }

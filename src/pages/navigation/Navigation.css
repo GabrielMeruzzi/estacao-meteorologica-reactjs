@@ -1,33 +1,83 @@
+html {
+  font-size: 16px;
+}
+
+@media screen and (min-width: 768px) {
+  html {
+    font-size: 17px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  html {
+    font-size: 18px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  html {
+    font-size: 19px;
+  }
+}
+
+h1 {
+  font-size: 1.75rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+}
+
+h4 {
+  font-size: 1.125rem;
+}
+
+h5 {
+  font-size: 1rem;
+}
+
+h6 {
+  font-size: 0.875rem;
+}
+
+p {
+  font-size: 1rem;
+}
+
 .cardInfo {
-    width: 90%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px;
-    margin: 5px;
-    position: relative;
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  margin: 5px;
+  position: relative;
 }
 
 .cardContent {
-    flex: 1; 
-    text-align: left;
+  flex: 1;
+  text-align: left;
 }
 
 .icon {
-    font-size: 3rem !important;
+  font-size: 3rem !important;
 }
 
 .cardGraph {
-    flex-direction: column;
+  flex-direction: column;
 }
 
 .graphChart {
-    width: 100% !important;
-    height: 350px !important;
+  width: 100% !important;
+  height: 350px !important;
 }
 
 .comparisonIcon {
-    font-size: 1rem !important;
-    color: green;
-    margin-right: 3px;
+  font-size: 1rem !important;
+  color: green;
+  margin-right: 3px;
 }

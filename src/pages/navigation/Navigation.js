@@ -1,14 +1,16 @@
 import * as React from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { createTheme } from "@mui/material/styles";
-import DashboardIcon from "@mui/icons-material/Dashboard";
+import CloudIcon from "@mui/icons-material/Cloud";
 import HomeIcon from "@mui/icons-material/Home";
+import MapIcon from "@mui/icons-material/Map";
 import { AppProvider } from "@toolpad/core/AppProvider";
 import { DashboardLayout } from "@toolpad/core/DashboardLayout";
 import { db } from "../../firebase/firebaseConfig";
 import { collection, onSnapshot } from "firebase/firestore";
 import HomePage from "../home/Home";
 import PageContent from "../dashboard/Dashboard";
+import MapPage from "../mapPage/MapPage";
 import "./Navigation.css";
 
 const theme = createTheme({
@@ -22,6 +24,8 @@ export default function NavigationLayout() {
   const navigate = useNavigate();
   const [navigation, setNavigation] = React.useState([
     { segment: " ", title: "Início", icon: <HomeIcon /> },
+    { segment: "mapa", title: "Mapa das Estações", icon: <MapIcon /> },
+    { kind: "header", title: "Estações Meteorológicas" },
   ]);
 
   React.useEffect(() => {
@@ -33,8 +37,8 @@ export default function NavigationLayout() {
           const d = doc.data();
           return {
             segment: `estacao/${doc.id}`,
-            title: `Estação Meteorológica ${d.name}`,
-            icon: <DashboardIcon />,
+            title: `${d.name}`,
+            icon: <CloudIcon />,
           };
         });
         setNavigation((prevNav) => [...prevNav, ...data]);
@@ -62,8 +66,9 @@ export default function NavigationLayout() {
     >
       <DashboardLayout>
         <Routes>
-          <Route path="/estacao/:id" element={<PageContent />} />
           <Route path="/" element={<HomePage />} />
+          <Route path="/mapa" element={<MapPage />} />
+          <Route path="/estacao/:id" element={<PageContent />} />
         </Routes>
       </DashboardLayout>
     </AppProvider>
